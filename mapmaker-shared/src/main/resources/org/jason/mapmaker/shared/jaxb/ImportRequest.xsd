@@ -1,0 +1,12 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:element name="ImportRequest" type="ImportRequest"/>
+    <xsd:complexType name="ImportRequest">
+        <xsd:sequence>
+            <xsd:element name="initialType" type="xsd:string" />
+            <xsd:element name="encodedData" type="xsd:base64Binary" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+</xsd:schema>

@@ -1,0 +1,19 @@
+UPDATE (15 Oct 2012):
+
+I made the first update to the code in a year yesterday (a minor fix to a popup panel). Anyways, I'm intending
+to start working on this again soon, since I _think_ I found an affordable host.
+
+Anyways, assuming this pans out, I'm going to switch the backend from MySQL to MongoDB and implement login
+functionality. I'm switching to Mongo bacause a) It's cooler, b) it's under active development, c) it's not an
+Oracle product (I deal with that crap enough in my day job).
+
+ORIGINAL TEXT:
+
+Welcome to the Mapmaker README. I bet you're here looking for the installation information.
+
+However, this being the year 2011, I put it in the wiki, not the README. The wiki can be accessed at this URL:
+
+https://github.com/dartmanx/mapmaker/wiki
+
+The code is licensed under the Apache 2.0 license. Rather than put a copy in the root directory, all files have the
+license in their header.

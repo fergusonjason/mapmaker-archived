@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="org.jason.mapmaker.service"/>
+    <context:component-scan base-package="org.jason.mapmaker.util"/>
+    <context:component-scan base-package="org.jason.mapmaker.repository.impl"/>
+
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+   <!-- <jee:jndi-lookup id="dataSource" jndi-name="jdbc/mapmaker" expected-type="javax.sql.DataSource" />-->
+
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/mapmaker"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="query*" read-only="true" />
+            <tx:method name="save*" />
+            <tx:method name="update*" />
+            <tx:method name="delete*" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- This is a shortcut to apply transactional to everything that is defined in the GenericRepository. Domain
+     specific methods at the repository level should be individually tagged w/ @Transactional -->
+    <!-- TODO: Move all transactional config here, not just the stuff defined in the generic repo -->
+    <aop:config>
+        <aop:pointcut id="genericServiceOperation" expression="execution(* org.jason.mapmaker.repository.GenericRepository2.*(..))" />
+        <aop:advisor advice-ref="transactionAdvice" pointcut-ref="genericServiceOperation" />
+    </aop:config>
+
+    <bean id="timingAdvice"
+          class="org.springframework.aop.interceptor.PerformanceMonitorInterceptor"/>
+
+</beans>
