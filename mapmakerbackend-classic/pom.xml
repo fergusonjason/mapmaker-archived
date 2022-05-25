@@ -45,7 +45,7 @@
     </repositories>
 
     <properties>
-        <spring.version>3.2.5.RELEASE</spring.version>
+        <spring.version>5.2.22.RELEASE</spring.version>
         <hibernate.version>4.3.4.Final</hibernate.version>
         <!-- GWT needs at least java 1.5 -->
         <maven.compiler.source>1.6</maven.compiler.source>
